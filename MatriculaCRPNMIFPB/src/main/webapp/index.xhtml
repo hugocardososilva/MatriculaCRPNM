@@ -1,0 +1,205 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+	
+	<ui:define name="content">
+		<h1 class="aw-page-title">Cadastro de matrícula</h1>
+		
+		<h:form id="frm">
+			
+			<p:toolbar>
+				<p:toolbarGroup>
+					
+					<p:commandButton value="Listar" onclick="PF('listarDLG').show();" process="@this"  />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:messages autoUpdate="true" showDetail="true"/>
+			
+			<div class="ui-fluid">
+			<p:panel>
+				<p:panelGrid columns="4" layout="grid" 
+					style="margin-top: 20px;"
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+				
+					<p:outputLabel value="Nome Completo" for="nome" />
+					<p:inputText id="nome" value="#{alunoMB.aluno.nome}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="Data de Nascimento" for="nascimento"/>
+					<p:calendar id="nascimento" pattern="dd/MM/yyyy" required="true" value="#{alunoMB.aluno.nascimento}"/>
+				</p:panelGrid>	
+				
+				<p:panelGrid  columns="6" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-1, ui-grid-col-3,  ui-grid-col-1, ui-grid-col-3">
+					
+					<p:outputLabel value="RG" for="rg" />
+					<p:inputMask id="rg" mask="9?999999999" required="true" value="#{alunoMB.aluno.rg}" />
+					
+					<p:outputLabel value="Data de Emissão" for="dtEmissao"/>
+					<p:calendar id="dtEmissao" pattern="dd/MM/yyyy" required="true" value="#{alunoMB.aluno.dataEmissao}"/>
+					
+					<p:outputLabel value="Órgao Emissor" for="orgaoEmissor" />
+					<p:inputText id="orgaoEmissor" value="#{alunoMB.aluno.orgaoEmissor}" required="true" style="text-transform:uppercase"/>
+					
+					
+					<p:outputLabel value="CPF" for="cpf" />
+					<p:inputMask id="cpf" mask="999.999.999-99" value="#{alunoMB.aluno.cpf}" />
+					
+					
+					<p:outputLabel value="Sexo" for="sexo" />
+					<p:selectOneMenu id="sexo" value="#{alunoMB.aluno.sexo}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="MASCULINO" itemValue="M" />
+						<f:selectItem itemLabel="FEMININO" itemValue="F" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Estado Civil" for="ecivil" />
+					<p:inputText id="ecivil" value="#{alunoMB.aluno.estadoCivil}" style="text-transform:uppercase" />
+				</p:panelGrid>
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+					
+					<p:outputLabel value="Cor dos Olhos" for="cor" />
+					<p:inputText id="cor" value="#{alunoMB.aluno.corOlhos}" required="true" style="text-transform:uppercase"  />
+					
+					<p:outputLabel value="Altura (Metros)" for="altura" />
+					<p:inputText id="altura" value="#{alunoMB.aluno.altura}" required="true" type="number" />
+				
+					<p:outputLabel value="Telefone Residencial" for="telefone" />
+					<p:inputMask id="telefone" mask="(99)9999-9999" value="#{alunoMB.aluno.telefoneResidencia}" />
+					
+					<p:outputLabel value="Celular" for="celular" />
+					<p:inputMask id="celular" mask="(99)9-9999-9999" required="true" value="#{alunoMB.aluno.celular}" />
+					
+				</p:panelGrid>
+					
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-8, ui-grid-col-1, ui-grid-col-1">
+					
+					<p:outputLabel value="Endereço" for="endereco" />
+					<p:inputText id="endereco" value="#{alunoMB.aluno.logradouro}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="N.º" for="numero" />
+					<p:inputText id="numero" value="#{alunoMB.aluno.numero}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+					
+					<p:outputLabel value="Complemento" for="complemento"  />
+					<p:inputText id="complemento" value="#{alunoMB.aluno.complemento}" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="CEP" for="cep" />
+					<p:inputMask id="cep" mask="99999-999" required="true" value="#{alunoMB.aluno.cep}" />
+					
+					
+					
+					<p:outputLabel value="Bairro" for="bairro" />
+					<p:inputText id="bairro" value="#{alunoMB.aluno.bairro}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-7, ui-grid-col-2, ui-grid-col-1">
+					
+					<p:outputLabel value="Cidade" for="cidade" />
+					<p:inputText id="cidade" value="#{alunoMB.aluno.cidade}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="Estado" for="estado" />
+					<p:inputText id="estado" value="#{alunoMB.aluno.estado}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-8">
+					
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" value="#{alunoMB.aluno.email}" required="true"/>
+				
+				</p:panelGrid>
+				</p:panel>
+				
+				<p:panel styleClass="panelgrid-noborder">
+				<h4>Solicito a matrícula no curso de:</h4>
+				<p:panelGrid  columns="1" layout="grid" 
+					styleClass="panelgrid-noborder">
+					<p:selectOneRadio id="curso" required="true" value="#{alunoMB.aluno.curso}" style="font-weight: bold;"  layout="grid" columns="1">
+           			 <f:selectItem  itemLabel="Curso de formação de aquavários - pescador profissional - POP (CFAQ-III C/M)" itemValue="Curso de formação de aquavários - pescador profissional - POP (CFAQ-III C/M)"/>
+           			 <f:selectItem  itemLabel="Curso de formação de aquavários - marinheiro auxiliar de convés e marinheiro auxiliar de máquinas (CFAQ-I C/M)" itemValue="Curso de formação de aquavários - marinheiro auxiliar de convés e marinheiro auxiliar de máquinas (CFAQ-I C/M)"/>
+           			 <f:selectItem  itemLabel="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.01" itemValue="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.01"/>
+           			  <f:selectItem  itemLabel="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.02" itemValue="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.02"/>
+           			  <f:selectItem  itemLabel="Curso de formação de aquavários - pescador especializado em pesca - PEP (CFAQ-III C)" itemValue="Curso de formação de aquavários - pescador especializado em pesca - PEP (CFAQ-III C)" />
+           			  <f:selectItem  itemLabel="Curso de Moço de Convés (Obrigatório a entrega da carta de estágio)" itemValue="Curso de Moço de Convés (Obrigatório a entrega da carta de estágio)"/>
+      				  </p:selectOneRadio>
+					
+				</p:panelGrid>
+				</p:panel>
+			</div>
+				<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Efetuar Matrícula"
+							onclick="PF('cadastroDLG').show();"
+							process="@this" />
+					
+					
+				</p:toolbarGroup>
+				</p:toolbar>
+			
+				<p:dialog widgetVar="cadastroDLG" header="Confirmação de Cadastro" modal="true"
+				resizable="false" style="min-width: 300px" responsive="true">
+				<p:messages id="msgDialog" autoUpdate="false" />
+				<p:panelGrid columns="2"  styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-1, ui-grid-col-11">
+					
+						
+						<p:selectBooleanCheckbox value="#{alunoMB.aceito}" required="true" requiredMessage="Precisa aceitar os termos." />
+						<h:outputText value="Declaro que li e aceito as condições do Edital Nº 253, de julho de 2014 referente aos cursos do Ensino
+						 Profissional MArítimo do Campus Avançado Cabedelo - Centro(Centro de Referência em PEsca e 
+						  Navegação MArítima - CRPNM) " />
+        			
+				</p:panelGrid>
+						
+        				<p:commandButton value="Confirmar" actionListener="#{alunoMB.salvar}" oncomplete="PF('cadastroDLG').hide();" update="@form" >
+        					<p:fileDownload value="#{alunoMB.relatorioConfirmacao}"/>
+        				</p:commandButton>
+						
+				
+			</p:dialog>
+			</h:form>
+			<h:form>
+			<p:dialog widgetVar="listarDLG" header="Acesso a lista de Matrículas" modal="true"
+				resizable="false" style="min-width:400px" responsive="true">
+				<p:messages id="msgDialog" autoUpdate="false" />
+				<p:panelGrid columns="2"  styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-4, ui-grid-col-8">
+					
+						
+						<p:outputLabel value="Senha" for="senha" />
+						<p:password id="senha"  value="#{alunoMB.senha}" />
+        			
+				</p:panelGrid>
+						
+        				<p:commandButton value="Logar" process="@form" action="#{alunoMB.logar}" oncomplete="PF('listarDLG').hide();" update="@form" />
+						
+				
+			</p:dialog>
+			</h:form>
+			
+			
+			
+		
+			
+		
+	</ui:define>
+	
+</ui:composition>

@@ -1,0 +1,250 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	template="/templates/Layout.xhtml">
+	
+	<ui:define name="content">
+		<h1 class="aw-page-title">Lista de Matrículas</h1>
+		
+		<h:form id="frm">
+			
+			<p:toolbar rendered="#{listaMB.editar}">
+				<p:toolbarGroup>
+					<p:commandButton value="Confirmar Matricula" action="#{listaMB.confirmarMatricula}"
+						update="@form" />
+					<p:commandButton value="Voltar" action="#{listaMB.voltar}" ajax="false" immediate="true" />
+					<p:commandButton value="Sair" action="#{listaMB.sair}" ajax="false" immediate="true" />
+				</p:toolbarGroup>
+			</p:toolbar>
+			
+			<p:messages autoUpdate="true" showDetail="true"/>
+			
+			<div class="ui-fluid">
+			<p:panel>
+			
+			<p:dataTable rendered="#{!listaMB.editar}" id="listaTable" value="#{listaMB.alunos}" var="aluno"
+				emptyMessage="Nenhum aluno adicionado." filteredValue="#{listaMB.alunosFiltrados}"
+				reflow="true"
+				style="margin-top: 10px">
+				<p:column style="width: 120px" >
+						<p:commandButton value="Confirmar" action="#{listaMB.editar}" update="@form" >
+							<f:setPropertyActionListener value="#{aluno}" target="#{listaMB.aluno}"/>
+						</p:commandButton>
+				</p:column>
+				<p:column style="width: 30px" headerText="ID" filterBy="#{aluno.id}" sortBy="#{aluno.id}">
+					<h:outputText value="#{aluno.id}"/>
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{aluno.nome}" sortBy="#{aluno.nome}">
+					<h:outputText value="#{aluno.nome}"/>
+				</p:column>
+				
+				<p:column headerText="CPF" sortBy="#{aluno.cpf}" filterBy="#{aluno.cpf}">
+					<h:outputText value="#{aluno.cpf}"/>
+				</p:column>
+				<p:column headerText="RG" sortBy="#{aluno.rg}" filterBy="#{aluno.rg}">
+					<h:outputText value="#{aluno.rg}"/>
+				</p:column>
+				<p:column headerText="Telefone" sortBy="#{aluno.telefoneResidencia}" filterBy="#{aluno.telefoneResidencia}">
+					<h:outputText value="#{aluno.telefoneResidencia}"/>
+				</p:column>
+				<p:column headerText="Curso" sortBy="#{aluno.curso}" filterBy="#{aluno.curso}">
+					<h:outputText value="#{aluno.curso}"/>
+				</p:column>
+				
+				<p:column headerText="Celular" sortBy="#{aluno.celular}" filterBy="#{aluno.celular}">
+					<h:outputText value="#{aluno.celular}"/>
+				</p:column>
+				<p:column headerText="Email" sortBy="#{aluno.email}" filterBy="#{aluno.email}">
+					<h:outputText value="#{aluno.email}"/>
+				</p:column>
+				<p:column headerText="Matriculado" style="width: 90px"  filterBy="#{aluno.matriculado}">
+					<h:outputText value="#{aluno.matriculado ? 'Sim' : 'Não'}"/>
+				</p:column>
+				
+			
+			</p:dataTable>
+			
+			
+			<p:panel rendered="#{listaMB.editar}">
+			<p:panelGrid  columns="2" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-2, ui-grid-col-2, ui-grid-col-2">
+					
+				<h:outputText style="font-weight:bold;" value="Matriculado: " />
+       			 <p:selectBooleanButton id="matriculado" value="#{listaMB.aluno.matriculado}" onLabel="Sim" offLabel="Não" style="width:60px" />
+       			 
+       			 <p:outputLabel value="Data da Solicitação" for="solicitacao"/>
+					<p:calendar id="solicitacao" readonly="true" disabled="true" pattern="dd/MM/yyyy" required="true" value="#{listaMB.aluno.dataSolicitacao}"/>
+				</p:panelGrid>		
+				
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-7, ui-grid-col-1, ui-grid-col-2">
+					<p:outputLabel value="Resposável pela confirmação" for="responsavel" />
+					<p:inputText id="responsavel" value="#{listaMB.aluno.responsavel}" required="true" style="text-transform:uppercase"/>
+					<p:outputLabel value="Nºda Matricula" for="nmatricula" />
+					<p:inputText id="nmatricula" value="#{listaMB.aluno.matricula}" required="true" style="text-transform:uppercase"/>
+				</p:panelGrid>
+				<p:panelGrid columns="4" layout="grid" 
+					style="margin-top: 20px;"
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+				
+					<p:outputLabel value="Nome Completo" for="nome" />
+					<p:inputText id="nome" value="#{listaMB.aluno.nome}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="Data de Nascimento" for="nascimento"/>
+					<p:calendar id="nascimento" pattern="dd/MM/yyyy" required="true" value="#{listaMB.aluno.nascimento}"/>
+				</p:panelGrid>	
+				
+				<p:panelGrid  columns="6" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-1, ui-grid-col-3, ui-grid-col-1, ui-grid-col-3,  ui-grid-col-1, ui-grid-col-3">
+					
+					<p:outputLabel value="RG" for="rg" />
+					<p:inputMask id="rg" mask="9?999999999" required="true" value="#{listaMB.aluno.rg}" />
+					
+					<p:outputLabel value="Data de Emissão" for="dtEmissao"/>
+					<p:calendar id="dtEmissao" pattern="dd/MM/yyyy" required="true" value="#{listaMB.aluno.dataEmissao}"/>
+					
+					<p:outputLabel value="Órgao Emissor" for="orgaoEmissor" />
+					<p:inputText id="orgaoEmissor" value="#{listaMB.aluno.orgaoEmissor}" required="true" style="text-transform:uppercase"/>
+					
+					
+					<p:outputLabel value="CPF" for="cpf" />
+					<p:inputMask id="cpf" mask="999.999.999-99" value="#{listaMB.aluno.cpf}" />
+					
+					
+					<p:outputLabel value="Sexo" for="sexo" />
+					<p:selectOneMenu id="sexo" value="#{listaMB.aluno.sexo}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItem itemLabel="MASCULINO" itemValue="M" />
+						<f:selectItem itemLabel="FEMININO" itemValue="F" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Estado Civil" for="ecivil" />
+					<p:inputText id="ecivil" value="#{listaMB.aluno.estadoCivil}" style="text-transform:uppercase" />
+				</p:panelGrid>
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+					
+					<p:outputLabel value="Cor dos Olhos" for="cor" />
+					<p:inputText id="cor" value="#{listaMB.aluno.corOlhos}" required="true" style="text-transform:uppercase"  />
+					
+					<p:outputLabel value="Altura (Metros)" for="altura" />
+					<p:inputText id="altura" value="#{listaMB.aluno.altura}" required="true" type="number" />
+				
+					<p:outputLabel value="Telefone Residencial" for="telefone" />
+					<p:inputMask id="telefone" mask="(99)9999-9999" value="#{listaMB.aluno.telefoneResidencia}" />
+					
+					<p:outputLabel value="Celular" for="celular" />
+					<p:inputMask id="celular" mask="(99)9-9999-9999" required="true" value="#{listaMB.aluno.celular}" />
+					
+				</p:panelGrid>
+					
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-8, ui-grid-col-1, ui-grid-col-1">
+					
+					<p:outputLabel value="Endereço" for="endereco" />
+					<p:inputText id="endereco" value="#{listaMB.aluno.logradouro}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="N.º" for="numero" />
+					<p:inputText id="numero" value="#{listaMB.aluno.numero}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-4, ui-grid-col-2, ui-grid-col-4">
+					
+					<p:outputLabel value="Complemento" for="complemento"  />
+					<p:inputText id="complemento" value="#{listaMB.aluno.complemento}" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="CEP" for="cep" />
+					<p:inputMask id="cep" mask="99999-999" required="true" value="#{listaMB.aluno.cep}" />
+					
+					
+					
+					<p:outputLabel value="Bairro" for="bairro" />
+					<p:inputText id="bairro" value="#{listaMB.aluno.bairro}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-7, ui-grid-col-2, ui-grid-col-1">
+					
+					<p:outputLabel value="Cidade" for="cidade" />
+					<p:inputText id="cidade" value="#{listaMB.aluno.cidade}" required="true" style="text-transform:uppercase"/>
+					
+					<p:outputLabel value="Estado" for="estado" />
+					<p:inputText id="estado" value="#{listaMB.aluno.estado}" required="true" style="text-transform:uppercase"/>
+					
+				</p:panelGrid>
+				<p:panelGrid  columns="4" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-2, ui-grid-col-8">
+					
+					<p:outputLabel value="Email" for="email" />
+					<p:inputText id="email" value="#{listaMB.aluno.email}" required="true"/>
+				
+				</p:panelGrid>
+				</p:panel>
+				
+				<p:panel styleClass="panelgrid-noborder" rendered="#{listaMB.editar}">
+				<h4>Solicito a matrícula no curso de:</h4>
+				<p:panelGrid  columns="1" layout="grid" 
+					styleClass="panelgrid-noborder">
+					<p:selectOneRadio id="curso" required="true" value="#{listaMB.aluno.curso}" style="font-weight: bold;"  layout="grid" columns="1">
+           			 <f:selectItem  itemLabel="Curso de formação de aquavários - pescador profissional - POP (CFAQ-III C/M)" itemValue="Curso de formação de aquavários - pescador profissional - POP (CFAQ-III C/M)"/>
+           			 <f:selectItem  itemLabel="Curso de formação de aquavários - marinheiro auxiliar de convés e marinheiro auxiliar de máquinas (CFAQ-I C/M)" itemValue="Curso de formação de aquavários - marinheiro auxiliar de convés e marinheiro auxiliar de máquinas (CFAQ-I C/M)"/>
+           			 <f:selectItem  itemLabel="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.01" itemValue="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.01"/>
+           			  <f:selectItem  itemLabel="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.02" itemValue="Curso de adaptação para aquavários - cozinheiro, taifeiro, enfermeiro e auxiliar de saúde (CAAQ-I CT/S) - 2015.02"/>
+           			  <f:selectItem  itemLabel="Curso de formação de aquavários - pescador especializado em pesca - PEP (CFAQ-III C)" itemValue="Curso de formação de aquavários - pescador especializado em pesca - PEP (CFAQ-III C)" />
+           			  <f:selectItem  itemLabel="Curso de Moço de Convés (Obrigatório a entrega da carta de estágio)" itemValue="Curso de Moço de Convés (Obrigatório a entrega da carta de estágio)"/>
+      				  </p:selectOneRadio>
+					
+				</p:panelGrid>
+				<h4>Documentação entregue no ato da matrícula</h4>
+				<p:panelGrid  columns="2" layout="grid" 
+					styleClass="panelgrid-noborder"
+					columnClasses="ui-grid-col-1, ui-grid-col-5">
+					
+					 <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouRG}" />
+					 <h:outputText style="font-weight:bold;" value="RG; " />
+					 
+					  <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouCPF}" />
+					 <h:outputText style="font-weight:bold;" value="CPF; " />
+					 
+					  <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouCEouFormacao}" />
+					 <h:outputText style="font-weight:bold;" value="Comprovante de escolaridade ou formação conforme especificado por curso; " />
+					 
+					  <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouCompResidencia}" />
+					 <h:outputText style="font-weight:bold;" value="Comprovante de Residência; " />
+					 
+					  <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouCerfReservista}" />
+					 <h:outputText style="font-weight:bold;" value="Comprovante de Reservista, para candidatos do sexo masculino; " />
+					 
+					  <p:selectBooleanCheckbox value="#{listaMB.aluno.entregouCEMocoConves}" />
+					 <h:outputText style="font-weight:bold;" value="Carta de estágio para Moço de Convés. " />
+				</p:panelGrid>
+			
+				</p:panel>
+			
+			
+			</p:panel>
+			</div>
+					
+			
+			
+			
+		
+			
+		</h:form>
+	</ui:define>
+	
+</ui:composition>
